@@ -7,11 +7,11 @@ import builtins
 
 
 original_open = open
-def bin_open(filename, mode='rb'):       # note, the default mode now opens in binary
+def bin_open(filename, mode='rb'):
     return original_open(filename, mode)
 
-IMAGE_FILE_LOCATION = "resources/text.png" # Photo by Amanda Jones on Unsplash
-input_img = cv2.imread(IMAGE_FILE_LOCATION) # image read
+IMAGE_FILE_LOCATION = "resources/text.png" # Any random text
+input_img = cv2.imread(IMAGE_FILE_LOCATION) # Reading image
 
 global degree
 degree=0
@@ -39,10 +39,8 @@ def orientation_correction(img, save_image=False):
     return img_rotated
 
 
-#####################################################################################################
 
 img_rotated = orientation_correction( input_img )
-# REGION OF INTEREST (ROI) SELECTION
 coordinates = []
 
 
@@ -53,15 +51,10 @@ def shape_selection(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         coordinatesList.append((x,y))
         coordinates = [(x, y)]
-        #
-        # print("here are the coordinates:")
-        # print(coordinatesList)
     elif event == cv2.EVENT_LBUTTONUP:
         coordinates.append( (x, y) )
-        # print( "here are second the coordinates:" )
 
         coordinatesList.append( (x, y))
-        # print( coordinatesList )
         cv2.rectangle( image, coordinates[0], coordinates[1], (0, 0, 255),2)
         textCoordinatesX =coordinates[0][0]-20
         textCoordinatesY = int((coordinates[0][1] + coordinates[1][1])/2)
@@ -100,20 +93,14 @@ for coors in range(int(len(coordinatesList)/2)):
         counter+=2
         pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract.exe'
         text = pytesseract.image_to_string( image_roi,
-                                           # config='--psm 11 --oem 3 -c tessedit_char_whitelist=/O'
                                             )
 
-        with open( "output_txt_file_name", 'w+', encoding='utf-8' ) as f:
-            f.writelines( text )
+        with open("output_ocr", 'a', encoding='utf-8') as f:
 
-        print( "The text in the selected region is as follows:" )
-        newText = text.replace("V","↓")
-        print(text)
-# if len( coordinates ) == 2:
-#     image_roi = image_copy[coordinates[0][1]:coordinates[1][1],
-#                 coordinates[0][0]:coordinates[1][0]]
-#     cv2.imshow( "Selected Region of Interest - Press any key to proceed", image_roi )
-#     cv2.waitKey( 0 )
+           f.writelines(text.split("\n")[0])
+           f.writelines("\n")
+
+        print( text.split("\n")[0])
 
 cv2.destroyAllWindows()
 
