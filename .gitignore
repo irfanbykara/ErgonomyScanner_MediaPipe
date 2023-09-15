@@ -1,5 +1,6 @@
 
 
 # to be ignored in remote repo
-.venv
-idea/
+.venv/
+.idea/
+.__pycache__/
