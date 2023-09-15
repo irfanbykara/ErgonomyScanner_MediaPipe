@@ -1,4 +1,4 @@
-
+git
 class Distance:
     def get_x_distance(self, pos1,pos2 ):
         return (abs(pos1[1]) - abs(pos2[1]))

@@ -1,0 +1,5 @@
+
+
+# to be ignored in remote repo
+.venv
+idea/
