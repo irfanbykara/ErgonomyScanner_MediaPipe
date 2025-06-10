@@ -64,10 +64,6 @@ def main():
         cv2.putText( img, 'FPS: ' + str( int( fps ) ),
                      (50, 50),
                      cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3 )
-        # cv2.rectangle(img, (400,400),(200,350),(0,0,255),-1)
-        # cv2.putText( img, str( 'Report' ),
-        #              (215, 390),
-        #              cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 255), 3 )
         cv2.setMouseCallback( 'Ergonomy Checker', onClick, param=[safe_counter, danger_counter] )
         cv2.imshow( 'Ergonomy Checker', img )
 
